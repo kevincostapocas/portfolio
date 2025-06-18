@@ -68,10 +68,16 @@ html {
   line-height: 30px;
 }
 
+.insta-small {
+  max-width: 280px;
+  width: 100% !important;
+  margin: 0 auto;
+}
+
 .ratio-9x16 {
   position: relative;
-  width: 100%;
-  padding-top: 177.78%; /* 16/9 = 56.25%, donc 9/16 = 177.78% */
+  padding-top: 177.78%;
+  
 }
 
 .text-justify {
