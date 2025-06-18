@@ -1,9 +1,20 @@
+AOS.init({
+  duration: 1200,
+  once: true
+});
+
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })
 
-window.instgrm.Embeds.process()
+function instaLoaded() {
+  if (window.instgrm && window.instgrm.Embeds) {
+    window.instgrm.Embeds.process()
+  }
+}
+
+document.getElementById('instagram-script').addEventListener('load', instaLoaded)
 
 function setTextSize() {
   const items = document.querySelectorAll('.card-text');
@@ -35,3 +46,21 @@ window.addEventListener('load', setTextSize);
 
 // 5. Réexécute la fonction si on redimensionne la fenêtre (ex: orientation mobile, resize navigateur)
 window.addEventListener('resize', setTextSize);
+
+
+
+document.querySelectorAll('.modal').forEach(modalEl => {
+  modalEl.addEventListener('show.bs.modal', () => {
+    if (typeof AOS !== 'undefined') {
+      AOS.disable();
+      console.log('AOS disabled');
+    }
+  });
+  modalEl.addEventListener('hidden.bs.modal', () => {
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+      AOS.enable();
+      console.log('AOS re-enabled and refreshed');
+    }
+  });
+});

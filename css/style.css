@@ -5,15 +5,12 @@
   text-decoration: none;
   padding: 0.5rem 1rem;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .btn-link-style:hover {
   text-decoration:none;
   color: #000000;
-}
-
-.insta-icon {
-  color: #C13584;
 }
 
 html {
@@ -24,6 +21,20 @@ html {
   object-fit: cover;
   height: 300px;
   max-height: 300px;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+}
+
+@media (max-width: 400px) {
+  .card-text {
+    -webkit-line-clamp: 3;
+  }
 }
 
 .carousel {
@@ -72,6 +83,16 @@ html {
   max-width: 280px;
   width: 100% !important;
   margin: 0 auto;
+}
+
+.insta-small iframe {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 500px;
+}
+
+.insta-icon {
+  color: #C13584;
 }
 
 .ratio-9x16 {
