@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate__fadeInUp');
+        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
         observer.unobserve(entry.target); // animation une seule fois
       }
     });
@@ -98,4 +98,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   elements.forEach(el => observer.observe(el));
+});
+
+// Forcer l'animation si on recharge la page au milieu (au cas où)
+window.addEventListener('load', () => {
+  // On force une vérification manuelle, utile sur certains navigateurs
+  document.querySelectorAll('.animate-on-scroll').forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    if (rect.top <= windowHeight * 0.9) { // si élément visible à 90% de la hauteur viewport
+      el.classList.add('animate__animated', 'animate__fadeInUp');
+    }
+  });
 });
