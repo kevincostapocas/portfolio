@@ -87,26 +87,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const elements = document.querySelectorAll('.animate-on-scroll');
 
   const observer = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-        observer.unobserve(entry.target); // animation une seule fois
+        // Léger décalage pour lisser les animations sur mobile
+        setTimeout(() => {
+          entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+        }, index * 100); // 100ms de décalage progressif
+        observer.unobserve(entry.target);
       }
     });
   }, {
-    threshold: 0.1
+    threshold: 0.1,
+    rootMargin: '0px 0px -20% 0px' // déclenche plus tôt (utile mobile)
   });
 
   elements.forEach(el => observer.observe(el));
 });
 
-// Forcer l'animation si on recharge la page au milieu (au cas où)
+// Fallback pour rechargement au milieu de page
 window.addEventListener('load', () => {
-  // On force une vérification manuelle, utile sur certains navigateurs
   document.querySelectorAll('.animate-on-scroll').forEach(el => {
     const rect = el.getBoundingClientRect();
     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-    if (rect.top <= windowHeight * 0.9) { // si élément visible à 90% de la hauteur viewport
+    if (rect.top <= windowHeight * 0.9) {
       el.classList.add('animate__animated', 'animate__fadeInUp');
     }
   });

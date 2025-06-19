@@ -115,6 +115,7 @@ html {
   visibility: hidden;
   transform: translate3d(0, 10px, 0);
   transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
 }
 
 .animate-on-scroll.animate__animated.animate__fadeInUp {
