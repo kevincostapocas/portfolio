@@ -89,28 +89,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        // Léger décalage pour lisser les animations sur mobile
-        setTimeout(() => {
-          entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-        }, index * 100); // 100ms de décalage progressif
+        // Ne pas réappliquer l'animation si elle est déjà appliquée
+        if (!entry.target.classList.contains('animate__fadeInUp')) {
+          setTimeout(() => {
+            entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+          }, index * 100);
+        }
         observer.unobserve(entry.target);
       }
     });
   }, {
     threshold: 0.1,
-    rootMargin: '0px 0px -20% 0px' // déclenche plus tôt (utile mobile)
+    rootMargin: '0px 0px -20% 0px'
   });
 
   elements.forEach(el => observer.observe(el));
 });
 
-// Fallback pour rechargement au milieu de page
 window.addEventListener('load', () => {
   document.querySelectorAll('.animate-on-scroll').forEach(el => {
     const rect = el.getBoundingClientRect();
     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
     if (rect.top <= windowHeight * 0.9) {
-      el.classList.add('animate__animated', 'animate__fadeInUp');
+      if (!el.classList.contains('animate__fadeInUp')) {
+        el.classList.add('animate__animated', 'animate__fadeInUp');
+      }
     }
   });
 });

@@ -116,6 +116,8 @@ html {
   transform: translate3d(0, 10px, 0);
   transition: opacity 0.8s ease, transform 0.8s ease;
   will-change: opacity, transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .animate-on-scroll.animate__animated.animate__fadeInUp {
@@ -124,10 +126,9 @@ html {
   transform: translate3d(0, 0, 0);
   animation-name: fadeInUpCustom;
   animation-duration: 0.8s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 
-/* Animation keyframes */
 @keyframes fadeInUpCustom {
   from {
     opacity: 0;
