@@ -1,8 +1,3 @@
-AOS.init({
-  duration: 1200,
-  once: true
-});
-
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
@@ -47,20 +42,22 @@ window.addEventListener('load', setTextSize);
 // 5. Réexécute la fonction si on redimensionne la fenêtre (ex: orientation mobile, resize navigateur)
 window.addEventListener('resize', setTextSize);
 
+  const modalContents = {}
 
+  document.querySelectorAll('.modal').forEach(modal => {
+    const body = modal.querySelector('[data-modal-id]')
+    if (!body) return
 
-document.querySelectorAll('.modal').forEach(modalEl => {
-  modalEl.addEventListener('show.bs.modal', () => {
-    if (typeof AOS !== 'undefined') {
-      AOS.disable();
-      console.log('AOS disabled');
-    }
-  });
-  modalEl.addEventListener('hidden.bs.modal', () => {
-    if (typeof AOS !== 'undefined') {
-      AOS.refresh();
-      AOS.enable();
-      console.log('AOS re-enabled and refreshed');
-    }
-  });
-});
+    const modalId = body.getAttribute('data-modal-id')
+    modalContents[modalId] = body.innerHTML
+
+    modal.addEventListener('hidden.bs.modal', function () {
+      body.innerHTML = modalContents[modalId]
+
+      if (window.instgrm) {
+        window.instgrm.Embeds.process()
+      }
+    })
+  })
+
+ 
