@@ -17,6 +17,10 @@ html {
   scroll-padding-top: 80px; /* ajuste à la hauteur de ta navbar */
 }
 
+.progress-bar {
+  transition: width 2s ease-in-out;
+}
+
 .card-img {
   object-fit: cover;
   height: 300px;
@@ -46,6 +50,7 @@ html {
 
 .carousel-item {
   height: 475px;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card {
@@ -103,4 +108,15 @@ html {
 
 .text-justify {
   text-align: justify;
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.animate-on-scroll.animate__fadeInUp {
+  opacity: 1;
+  visibility: visible;
+  animation-duration: 0.8s;
 }

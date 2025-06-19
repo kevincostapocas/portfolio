@@ -11,6 +11,29 @@ function instaLoaded() {
 
 document.getElementById('instagram-script').addEventListener('load', instaLoaded)
 
+const progressBars = document.querySelectorAll('.progress-bar');
+
+const options = {
+  threshold: 0.5
+};
+
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const progressBar = entry.target;
+      const finalWidth = progressBar.getAttribute('data-final-width');
+      progressBar.style.width = finalWidth + '%';
+      observer.unobserve(progressBar);
+    }
+  });
+}, options);
+
+progressBars.forEach(bar => {
+  // Assure que la barre est bien à 0 au départ
+  bar.style.width = '0%';
+  observer.observe(bar);
+});
+
 function setTextSize() {
   const items = document.querySelectorAll('.card-text');
 
@@ -60,4 +83,19 @@ window.addEventListener('resize', setTextSize);
     })
   })
 
- 
+document.addEventListener('DOMContentLoaded', () => {
+  const elements = document.querySelectorAll('.animate-on-scroll');
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate__fadeInUp');
+        observer.unobserve(entry.target); // animation une seule fois
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  elements.forEach(el => observer.observe(el));
+});
